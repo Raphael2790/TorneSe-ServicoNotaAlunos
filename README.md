@@ -1,6 +1,9 @@
 # Comando para listar os Projetos
  - dotnet new --list
 
+## Instalando pacotes Nuget apontando a origem
+ - dotnet add package Microsoft.Extensions.DependencyInjection --source  https://api.nuget.org/v3/index.json
+
 ## Comando para adicionar projetos a solução vazia
 ``` bash
 A partir de uma solução criada digitamos o comando para adicionar a referencia ao csproj dos projetos

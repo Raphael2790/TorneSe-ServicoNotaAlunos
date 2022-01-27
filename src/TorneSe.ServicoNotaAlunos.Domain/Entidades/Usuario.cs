@@ -1,9 +1,10 @@
 using System;
 using TorneSe.ServicoNotaAlunos.Domain.ValueObjects;
+using TorneSe.ServicoNotaAlunos.Domain.DomainObjects;
 
 namespace TorneSe.ServicoNotaAlunos.Domain.Entidades;
 
-public class Usuario : Entidade
+public class Usuario : Entidade, IRaizAgregacao
 {
     public Usuario(string nome, string documentoIdentificacao, DateTime dataNascimento, bool ativo, string email, Telefone telefoneContato, bool administrativo, DateTime dataCadastro)
     {

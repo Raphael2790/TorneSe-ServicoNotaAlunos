@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
 using TorneSe.ServicoNotaAlunos.Domain.Enums;
+using TorneSe.ServicoNotaAlunos.Domain.DomainObjects;
 
 namespace TorneSe.ServicoNotaAlunos.Domain.Entidades;
 
-public class Disciplina : Entidade
+public class Disciplina : Entidade, IRaizAgregacao
 {
     public Disciplina(string nome, string descricao, DateTime dataInicio, DateTime dataFim, TipoDisciplina tipoDisciplina, DateTime dataCadastro, int professorId)
     {
