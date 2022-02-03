@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace TorneSe.ServicoNotaAlunos.Domain.Entidades;
 
 public class Conteudo : Entidade
@@ -24,4 +21,7 @@ public class Conteudo : Entidade
     public DateTime DataCadastro { get; private set; }
     public Disciplina Disciplina { get; private set; }
     public ICollection<Atividade> Atividades { get; private set; }
+
+    public void CadastrarAtividade(Atividade atividade) =>
+        Atividades.Add(atividade);
 }

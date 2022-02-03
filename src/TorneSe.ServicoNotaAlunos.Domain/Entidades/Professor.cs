@@ -4,8 +4,9 @@ namespace TorneSe.ServicoNotaAlunos.Domain.Entidades;
 
 public class Professor : Entidade
 {
-    public Professor(string nomeAbreviado, string emailInterno, bool professorTitular, bool professorSuplente, int usuarioId, DateTime dataCadastro)
+    public Professor(int professorId, string nomeAbreviado, string emailInterno, bool professorTitular, bool professorSuplente, int usuarioId, DateTime dataCadastro)
     {
+        Id = professorId;
         NomeAbreviado = nomeAbreviado;
         EmailInterno = emailInterno;
         ProfessorTitular = professorTitular;

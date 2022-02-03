@@ -1,4 +1,5 @@
 using TorneSe.ServicoNotaAlunos.Domain.Messages;
+using TorneSe.ServicoNotaAlunos.Domain.Notification;
 using TorneSe.ServicoNotaAlunos.MessageBus.Messages;
 
 namespace TorneSe.ServicoNotaAlunos.MessageBus.SQS.Clients;
@@ -6,14 +7,28 @@ namespace TorneSe.ServicoNotaAlunos.MessageBus.SQS.Clients;
 public class LancarNotaAlunoFakeClient : SqsClient<RegistrarNotaAluno>,ILancarNotaAlunoFakeClient
 {
     private readonly Queue<QueueMessage<RegistrarNotaAluno>> _filaNotasParaRegistrar;
-    public LancarNotaAlunoFakeClient()
+    private readonly ContextoNotificacao _contextoNotificao;
+
+    public LancarNotaAlunoFakeClient(ContextoNotificacao contextoNotificao)
     {
         _filaNotasParaRegistrar = NotasParaProcessar();
+        _contextoNotificao = contextoNotificao;
     }
 
     public override async Task<QueueMessage<RegistrarNotaAluno>> GetMessageAsync()
     {
-        return await Task.FromResult(_filaNotasParaRegistrar.Dequeue());
+        QueueMessage<RegistrarNotaAluno> mensagem = null;
+        
+        try
+        {
+            mensagem = await Task.FromResult(_filaNotasParaRegistrar.FirstOrDefault());
+        }
+        catch(Exception ex)
+        {
+            _contextoNotificao.Add(ex.Message);
+        }
+
+        return mensagem;
     }
 
     private Queue<QueueMessage<RegistrarNotaAluno>> NotasParaProcessar()
@@ -24,7 +39,7 @@ public class LancarNotaAlunoFakeClient : SqsClient<RegistrarNotaAluno>,ILancarNo
             MessageId = Guid.NewGuid().ToString(),
             MessageHandle = Guid.NewGuid().ToString(),
             ReceiveCount = 0,
-            Message = new()
+            MessageBody = new()
             {
                 AlunoId = 1234,
                 AtividadeId = 34545,

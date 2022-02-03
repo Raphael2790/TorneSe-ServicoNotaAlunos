@@ -1,4 +1,5 @@
 using TorneSe.ServicoNotaAlunos.Domain.DomainObjects;
+using TorneSe.ServicoNotaAlunos.Domain.Validations;
 
 namespace TorneSe.ServicoNotaAlunos.Domain.Messages;
 
@@ -13,6 +14,7 @@ public class RegistrarNotaAluno : Mensagem
 
     public override bool MensagemEstaValida()
     {
-        return base.MensagemEstaValida();
+        Validacoes = RegistrarNotaAlunoValidacao.Instance.Validate(this);
+        return Validacoes.IsValid;
     }
 }

@@ -31,4 +31,7 @@ public class Disciplina : Entidade, IRaizAgregacao
 
     public Professor Professor { get; private set; }
     public ICollection<Conteudo> Conteudos { get; private set; }
+
+    public void AdicionarConteudo(Conteudo conteudo) =>
+        Conteudos.Add(conteudo);
 }
