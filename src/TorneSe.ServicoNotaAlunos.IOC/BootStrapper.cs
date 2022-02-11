@@ -27,6 +27,7 @@ public static class BootStrapper
     {
         services.AddScoped<IServicoAplicacaoNotaAluno,ServicoAplicacaoNotaAluno>();
         services.AddScoped<IServicoNotaAluno, ServicoNotaAluno>();
+        services.AddScoped<IServicoValidacaoNotaAluno, ServicoValidacaoNotaAluno>();
     }
 
     private static void RegistrarContextos(IServiceCollection services)

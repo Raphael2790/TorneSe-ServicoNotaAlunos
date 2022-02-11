@@ -23,9 +23,9 @@ public class Aluno: Entidade
     public int UsuarioId { get; private set; }
     public DateTime DataCadastro { get; private set; }
 
-    public Usuario Usuario { get; private set; }
+    public Usuario Usuario { get; set; }
     public ICollection<Nota> Notas { get; private set; }
-    public ICollection<AlunosTurmas> AlunosTurmas { get; private set; }
+    public ICollection<AlunosTurmas> AlunosTurmas { get; set; }
 
     public void AdicionarNota(Nota nota) 
     {

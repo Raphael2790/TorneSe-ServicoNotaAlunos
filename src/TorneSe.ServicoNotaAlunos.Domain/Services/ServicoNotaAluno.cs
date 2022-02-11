@@ -13,14 +13,17 @@ public class ServicoNotaAluno : IServicoNotaAluno
     private readonly ContextoNotificacao _contextoNotificacao;
     private readonly IUsuarioRepository _usuarioRepository;
     private readonly IDisciplinaRepository _disciplinaRepository;
+    private readonly IServicoValidacaoNotaAluno _servicoValidacaoNotaAluno;
 
     public ServicoNotaAluno(ContextoNotificacao contextoNotificacao,
                             IUsuarioRepository usuarioRepository,
-                            IDisciplinaRepository disciplinaRepository)
+                            IDisciplinaRepository disciplinaRepository,
+                            IServicoValidacaoNotaAluno servicoValidacaoNotaAluno)
     {
         _contextoNotificacao = contextoNotificacao;
         _usuarioRepository = usuarioRepository;
         _disciplinaRepository = disciplinaRepository;
+        _servicoValidacaoNotaAluno = servicoValidacaoNotaAluno;
     }
 
     public async Task LancarNota(RegistrarNotaAluno registrarNotaAluno)
@@ -33,6 +36,19 @@ public class ServicoNotaAluno : IServicoNotaAluno
             return;
         }
 
+        var (aluno,professor,disciplina) = await BuscarAlunoProfessorDisciplina2(registrarNotaAluno);
+
+        if(_contextoNotificacao.TemNotificacoes)
+            return;
+
+        _servicoValidacaoNotaAluno.ValidarLancamento(aluno,professor,disciplina);
+
+        if(_contextoNotificacao.TemNotificacoes)
+            return;
+    }
+
+    private void CodigosExemplo()
+    {
         // var aluno = _usuarioRepository.BuscarAluno(registrarNotaAluno.AlunoId);
         // var professor = _usuarioRepository.BuscarProfessor(registrarNotaAluno.ProfessorId);
         // var disciplina = _disciplinaRepository.BuscarDisciplinaPorAtividadeId(registrarNotaAluno.AtividadeId);
@@ -40,13 +56,6 @@ public class ServicoNotaAluno : IServicoNotaAluno
         // await Task.WhenAll(new List<Task> {aluno, professor, disciplina});
 
         //var (aluno,professor,disciplina) = await BuscarAlunoProfessorDisciplina(registrarNotaAluno);
-
-        var (aluno,professor,disciplina) = await BuscarAlunoProfessorDisciplina2(registrarNotaAluno);
-
-        if(_contextoNotificacao.TemNotificacoes)
-            return;
-        
-        
     }
 
     private async Task<(Aluno aluno, Professor professor, Disciplina disciplina)> BuscarAlunoProfessorDisciplina2(RegistrarNotaAluno registrarNotaAluno)
