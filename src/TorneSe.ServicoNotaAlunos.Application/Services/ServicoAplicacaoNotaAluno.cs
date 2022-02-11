@@ -1,4 +1,5 @@
 using TorneSe.ServicoNotaAlunos.Application.Interfaces;
+using TorneSe.ServicoNotaAlunos.Domain.Excecoes;
 using TorneSe.ServicoNotaAlunos.Domain.Interfaces.Services;
 using TorneSe.ServicoNotaAlunos.Domain.Messages;
 
@@ -14,7 +15,18 @@ public class ServicoAplicacaoNotaAluno : IServicoAplicacaoNotaAluno
 
     public async Task ProcessarLancamentoNota(RegistrarNotaAluno registrarNotaAluno)
     {
-        Console.WriteLine("Orquestrando o fluxo da aplicação");
-        await _servicoNotaAluno.LancarNota(registrarNotaAluno);
+        try
+        {
+            Console.WriteLine("Orquestrando o fluxo da aplicação");
+            await _servicoNotaAluno.LancarNota(registrarNotaAluno);
+        }
+        catch(DomainException ex)
+        {
+            System.Console.WriteLine(ex.Message);
+        }
+        catch(Exception ex)
+        {
+            System.Console.WriteLine(ex.Message);
+        }
     }
 }

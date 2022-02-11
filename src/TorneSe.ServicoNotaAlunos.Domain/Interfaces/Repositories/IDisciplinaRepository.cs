@@ -5,5 +5,5 @@ namespace TorneSe.ServicoNotaAlunos.Domain.Interfaces.Repositories;
 
 public interface IDisciplinaRepository : IRepository<Disciplina>
 {
-    
+    Task<Disciplina> BuscarDisciplinaPorAtividadeId(int atividadeId);
 }

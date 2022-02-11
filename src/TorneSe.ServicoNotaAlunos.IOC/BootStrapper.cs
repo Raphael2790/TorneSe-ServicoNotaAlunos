@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using TorneSe.ServicoNotaAlunos.Application.Interfaces;
 using TorneSe.ServicoNotaAlunos.Application.Services;
+using TorneSe.ServicoNotaAlunos.Data.Context;
 using TorneSe.ServicoNotaAlunos.Data.Repositories;
 using TorneSe.ServicoNotaAlunos.Domain.Interfaces.Repositories;
 using TorneSe.ServicoNotaAlunos.Domain.Interfaces.Services;
@@ -30,7 +31,7 @@ public static class BootStrapper
 
     private static void RegistrarContextos(IServiceCollection services)
     {
-        
+        services.AddScoped<FakeDbContexto>();
     }
 
     private static void RegistrarRepositorios(IServiceCollection services)
