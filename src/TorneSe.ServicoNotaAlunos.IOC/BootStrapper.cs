@@ -20,6 +20,7 @@ public static class BootStrapper
         RegistrarRepositorios(services);
         RegistrarFilas(services);
         RegistrarContextoNotificacao(services);
+        RegistrarEncadeamentos(services);
         return services;
     }
 
@@ -49,5 +50,10 @@ public static class BootStrapper
     private static void RegistrarContextoNotificacao(IServiceCollection services)
     {
         services.AddScoped<ContextoNotificacao>();
+    }
+
+    private static void RegistrarEncadeamentos(IServiceCollection services)
+    {
+        
     }
 }

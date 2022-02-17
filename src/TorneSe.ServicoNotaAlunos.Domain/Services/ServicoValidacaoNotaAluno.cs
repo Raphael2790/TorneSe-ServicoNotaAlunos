@@ -1,8 +1,10 @@
+using TorneSe.ServicoNotaAlunos.Domain.DomainObjects;
 using TorneSe.ServicoNotaAlunos.Domain.Entidades;
 using TorneSe.ServicoNotaAlunos.Domain.Enums;
 using TorneSe.ServicoNotaAlunos.Domain.Interfaces.Services;
 using TorneSe.ServicoNotaAlunos.Domain.Notification;
 using TorneSe.ServicoNotaAlunos.Domain.Utils;
+using TorneSe.ServicoNotaAlunos.Domain.Validations.Handlers;
 
 namespace TorneSe.ServicoNotaAlunos.Domain.Services;
 
@@ -86,5 +88,16 @@ public class ServicoValidacaoNotaAluno : IServicoValidacaoNotaAluno
         ValidarAluno(aluno, disciplina.Id);
         ValidarProfessor(professor, disciplina.Id);
         ValidarDisciplina(disciplina);
+    }
+
+    public void ValidarLancamento(ServicoNotaValidacaoRequest request)
+    {
+        var inicialHandler = new AlunoValidacaoHandler(_contextoNotificacao);
+
+        inicialHandler
+        .SetNext(new ProfessorValidacaoHandler(_contextoNotificacao))
+        .SetNext(new DisciplinaValidacaoHandler(_contextoNotificacao));
+
+        inicialHandler.Handle(request);
     }
 }
