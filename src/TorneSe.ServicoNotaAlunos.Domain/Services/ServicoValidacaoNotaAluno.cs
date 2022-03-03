@@ -4,23 +4,26 @@ using TorneSe.ServicoNotaAlunos.Domain.Enums;
 using TorneSe.ServicoNotaAlunos.Domain.Interfaces.Services;
 using TorneSe.ServicoNotaAlunos.Domain.Notification;
 using TorneSe.ServicoNotaAlunos.Domain.Utils;
-using TorneSe.ServicoNotaAlunos.Domain.Validations.Handlers;
+using TorneSe.ServicoNotaAlunos.Domain.Validations.Handlers.Interfaces;
 
 namespace TorneSe.ServicoNotaAlunos.Domain.Services;
 
 public class ServicoValidacaoNotaAluno : IServicoValidacaoNotaAluno
 {
     private readonly ContextoNotificacao _contextoNotificacao;
+    private readonly IHandler<ServicoNotaValidacaoRequest> _validacaoHandler;
 
-    public ServicoValidacaoNotaAluno(ContextoNotificacao contextoNotificacao)
+    public ServicoValidacaoNotaAluno(ContextoNotificacao contextoNotificacao,
+                                     IHandler<ServicoNotaValidacaoRequest> validacaoHandler)
     {
         _contextoNotificacao = contextoNotificacao;
+        _validacaoHandler = validacaoHandler;
     }
 
     private void ValidarProfessor(Professor professor, int disciplinaId)
     {
         //o professor deve ser um usuário ativo
-        if(!professor.Usuario.Ativo)
+        if(!professor.Ativo)
         {
             _contextoNotificacao.Add(Constantes.MensagensValidacao.PROFESSOR_INATIVO);
             return;
@@ -61,7 +64,7 @@ public class ServicoValidacaoNotaAluno : IServicoValidacaoNotaAluno
     private void ValidarAluno(Aluno aluno, int disciplinaId)
     {
         //O aluno deve ser um usuario ativo
-        if(!aluno.Usuario.Ativo)
+        if(!aluno.Ativo)
         {
             _contextoNotificacao.Add(Constantes.MensagensValidacao.ALUNO_INATIVO);
             return;
@@ -92,12 +95,12 @@ public class ServicoValidacaoNotaAluno : IServicoValidacaoNotaAluno
 
     public void ValidarLancamento(ServicoNotaValidacaoRequest request)
     {
-        var inicialHandler = new AlunoValidacaoHandler(_contextoNotificacao);
+        // var inicialHandler = new AlunoValidacaoHandler(_contextoNotificacao);
 
-        inicialHandler
-        .SetNext(new ProfessorValidacaoHandler(_contextoNotificacao))
-        .SetNext(new DisciplinaValidacaoHandler(_contextoNotificacao));
-
-        inicialHandler.Handle(request);
+        // inicialHandler
+        // .SetNext(new ProfessorValidacaoHandler(_contextoNotificacao))
+        // .SetNext(new DisciplinaValidacaoHandler(_contextoNotificacao));
+        //inicialHandler.Handle(request);
+        _validacaoHandler.Handle(request);
     }
 }

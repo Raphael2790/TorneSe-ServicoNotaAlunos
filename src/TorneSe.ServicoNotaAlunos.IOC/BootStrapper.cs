@@ -3,10 +3,14 @@ using TorneSe.ServicoNotaAlunos.Application.Interfaces;
 using TorneSe.ServicoNotaAlunos.Application.Services;
 using TorneSe.ServicoNotaAlunos.Data.Context;
 using TorneSe.ServicoNotaAlunos.Data.Repositories;
+using TorneSe.ServicoNotaAlunos.Domain.DomainObjects;
 using TorneSe.ServicoNotaAlunos.Domain.Interfaces.Repositories;
 using TorneSe.ServicoNotaAlunos.Domain.Interfaces.Services;
 using TorneSe.ServicoNotaAlunos.Domain.Notification;
 using TorneSe.ServicoNotaAlunos.Domain.Services;
+using TorneSe.ServicoNotaAlunos.Domain.Validations.Handlers;
+using TorneSe.ServicoNotaAlunos.Domain.Validations.Handlers.Interfaces;
+using TorneSe.ServicoNotaAlunos.IOC.Extensions;
 using TorneSe.ServicoNotaAlunos.MessageBus.SQS.Clients;
 
 namespace TorneSe.ServicoNotaAlunos.IOC;
@@ -54,6 +58,12 @@ public static class BootStrapper
 
     private static void RegistrarEncadeamentos(IServiceCollection services)
     {
-        
+        services
+            .AdicionarEncadeamento<IHandler<ServicoNotaValidacaoRequest>, ServicoNotaValidacaoRequest>
+            (typeof(AlunoValidacaoHandler), typeof(ProfessorValidacaoHandler), typeof(DisciplinaValidacaoHandler));
+
+        services
+          .AdicionarEncadeamentoAssincrono<IAsyncHandler<ServicoNotaValidacaoRequest>, ServicoNotaValidacaoRequest>
+        (typeof(AlunoRequestBuildHandler), typeof(ProfessorRequestBuildHandler), typeof(DisciplinaRequestBuildHandler));
     }
 }

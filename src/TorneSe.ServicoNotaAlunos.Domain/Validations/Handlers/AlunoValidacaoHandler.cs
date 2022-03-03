@@ -17,7 +17,7 @@ public class AlunoValidacaoHandler : AbstractHandler<ServicoNotaValidacaoRequest
     
     public override void Handle(ServicoNotaValidacaoRequest request)
     {
-        if(!request.Aluno.Usuario.Ativo)
+        if(!request.Aluno.Ativo)
         {
             _contextoNotificacao.Add(Constantes.MensagensValidacao.ALUNO_INATIVO);
             return;

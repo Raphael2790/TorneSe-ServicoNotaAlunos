@@ -2,7 +2,7 @@ using System;
 
 namespace TorneSe.ServicoNotaAlunos.Domain.Entidades;
 
-public class Professor : Entidade
+public class Professor : Usuario
 {
     public Professor(int professorId, string nomeAbreviado, 
                 string emailInterno, bool professorTitular, 
@@ -13,7 +13,6 @@ public class Professor : Entidade
         EmailInterno = emailInterno;
         ProfessorTitular = professorTitular;
         ProfessorSuplente = professorSuplente;
-        UsuarioId = usuarioId;
         DataCadastro = dataCadastro;
         DisciplinaId = disciplinaId;
     }
@@ -24,10 +23,8 @@ public class Professor : Entidade
     public string EmailInterno { get; private set; }
     public bool ProfessorTitular { get; private set; }
     public bool ProfessorSuplente { get; private set; }
-    public int UsuarioId { get; private set; }
     public DateTime DataCadastro { get; private set; }
     public int DisciplinaId { get; private set; }
 
-    public Usuario Usuario { get; set; }
     public Disciplina Disciplina { get; private set; }
 }

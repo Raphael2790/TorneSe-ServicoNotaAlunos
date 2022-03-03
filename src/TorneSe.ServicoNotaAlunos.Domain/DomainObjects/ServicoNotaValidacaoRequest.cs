@@ -2,7 +2,7 @@ using TorneSe.ServicoNotaAlunos.Domain.Entidades;
 
 namespace TorneSe.ServicoNotaAlunos.Domain.DomainObjects;
 
-public class ServicoNotaValidacaoRequest
+public class ServicoNotaValidacaoRequest : IRequest
 {
     public static ServicoNotaValidacaoRequest Instance => new ServicoNotaValidacaoRequest();
     public int AlunoId { get; set; }

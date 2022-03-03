@@ -13,3 +13,14 @@ A partir de uma solução criada digitamos o comando para adicionar a referencia
 
  ## Sites para estudo
  - https://refactoring.guru/pt-br - Refactoring Guru
+
+
+ ## Documentação docker Postgres
+ - https://hub.docker.com/_/postgres/
+ 
+
+ ## Subir container com Postgres
+ - docker run -p 5432:5432 -v /c/Users/raphael.silvestre/Documents/database:/var/lib/postgresql/data -e POSTGRES_PASSWORD=1234 -e POSTGRES_USER=torneSe -e POSTGRES_DB=TorneSeDb -d postgres
+
+ ## Site para encontrar formatos de connections strings
+ - https://www.connectionstrings.com/

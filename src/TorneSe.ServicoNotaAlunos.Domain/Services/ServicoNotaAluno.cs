@@ -6,7 +6,7 @@ using TorneSe.ServicoNotaAlunos.Domain.Interfaces.Services;
 using TorneSe.ServicoNotaAlunos.Domain.Messages;
 using TorneSe.ServicoNotaAlunos.Domain.Notification;
 using TorneSe.ServicoNotaAlunos.Domain.Utils;
-using TorneSe.ServicoNotaAlunos.Domain.Validations.Handlers;
+using TorneSe.ServicoNotaAlunos.Domain.Validations.Handlers.Interfaces;
 
 namespace TorneSe.ServicoNotaAlunos.Domain.Services;
 
@@ -16,16 +16,19 @@ public class ServicoNotaAluno : IServicoNotaAluno
     private readonly IUsuarioRepository _usuarioRepository;
     private readonly IDisciplinaRepository _disciplinaRepository;
     private readonly IServicoValidacaoNotaAluno _servicoValidacaoNotaAluno;
+    private readonly IAsyncHandler<ServicoNotaValidacaoRequest> _requestBuildHandler;
 
     public ServicoNotaAluno(ContextoNotificacao contextoNotificacao,
                             IUsuarioRepository usuarioRepository,
                             IDisciplinaRepository disciplinaRepository,
-                            IServicoValidacaoNotaAluno servicoValidacaoNotaAluno)
+                            IServicoValidacaoNotaAluno servicoValidacaoNotaAluno,
+                            IAsyncHandler<ServicoNotaValidacaoRequest> requestBuildHandler)
     {
         _contextoNotificacao = contextoNotificacao;
         _usuarioRepository = usuarioRepository;
         _disciplinaRepository = disciplinaRepository;
         _servicoValidacaoNotaAluno = servicoValidacaoNotaAluno;
+        _requestBuildHandler = requestBuildHandler;
     }
 
     public async Task LancarNota(RegistrarNotaAluno registrarNotaAluno)
@@ -38,20 +41,36 @@ public class ServicoNotaAluno : IServicoNotaAluno
             return;
         }
 
-        //var (aluno,professor,disciplina) = await BuscarAlunoProfessorDisciplina2(registrarNotaAluno);
-
         var request = await ConstruirRequest(registrarNotaAluno);
 
         if(_contextoNotificacao.TemNotificacoes)
             return;
 
-        //_servicoValidacaoNotaAluno.ValidarLancamento(aluno,professor,disciplina);
-
         _servicoValidacaoNotaAluno.ValidarLancamento(request);
 
         if(_contextoNotificacao.TemNotificacoes)
             return;
+
+        if(AlunoPossuiNotaParaCancelar(request.Aluno, registrarNotaAluno.AtividadeId, registrarNotaAluno.NotaSubstitutiva))
+            RemoverNotaAluno(request.Aluno, registrarNotaAluno.AtividadeId);
+
+        var nota = new Nota(request.AlunoId, request.AtividadeId, registrarNotaAluno.ValorNota,
+                        DateTime.Now, 101020);
+
+        request.Aluno.AdicionarNota(nota);
+
+        await _usuarioRepository.UnitOfWork.Commit();
     }
+
+    private void RemoverNotaAluno(Aluno aluno, int atividadeId)
+    {
+        var nota = aluno.Notas.FirstOrDefault(x => x.AtividadeId == atividadeId);
+        nota.CancelarNotaPorRetentativa();
+    }
+
+    private bool AlunoPossuiNotaParaCancelar(Aluno aluno, int atividadeId, bool notaSubstitutiva) =>
+        aluno.Notas.Any(x => x.AtividadeId == atividadeId && notaSubstitutiva);
+    
 
     private async Task<ServicoNotaValidacaoRequest> ConstruirRequest(RegistrarNotaAluno registrarNotaAluno)
     {
@@ -60,14 +79,16 @@ public class ServicoNotaAluno : IServicoNotaAluno
         request.ProfessorId = registrarNotaAluno.ProfessorId;
         request.AtividadeId = registrarNotaAluno.AtividadeId;
 
-        var initialHandler = new AlunoRequestBuildHandler(_contextoNotificacao, 
-                                                    _usuarioRepository);
-        initialHandler.SetNext(new ProfessorRequestBuildHandler(_contextoNotificacao,
-                                                                _usuarioRepository))
-                      .SetNext(new DisciplinaRequestBuildHandler(_contextoNotificacao,
-                                            _disciplinaRepository));
+        // var initialHandler = new AlunoRequestBuildHandler(_contextoNotificacao, 
+        //                                             _usuarioRepository);
+        // initialHandler.SetNext(new ProfessorRequestBuildHandler(_contextoNotificacao,
+        //                                                         _usuarioRepository))
+        //               .SetNext(new DisciplinaRequestBuildHandler(_contextoNotificacao,
+        //                                     _disciplinaRepository));
 
-        await initialHandler.Handle(request);
+        // await initialHandler.Handle(request);
+
+        await _requestBuildHandler.Handle(request);
 
         return request;
     }

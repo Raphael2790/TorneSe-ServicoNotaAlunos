@@ -23,8 +23,8 @@ public class FakeDbContexto : IDisposable, IUnitOfWork
 
         Aluno aluno = new(1234,"Raphael", "raphael.s@email.com", 1212, DateTime.Now);
 
-        aluno.Usuario = new("Raphael Silvestre", "87628929919", new DateTime(1990, 3, 10), true,
-        "raphael.s@email.com",null, false,DateTime.Now);
+        // aluno.Usuario = new("Raphael Silvestre", "87628929919", new DateTime(1990, 3, 10), true,
+        // "raphael.s@email.com",null, false,DateTime.Now);
 
         aluno.AlunosTurmas = new List<AlunosTurmas>() 
         { 
@@ -50,8 +50,8 @@ public class FakeDbContexto : IDisposable, IUnitOfWork
         Professor professor = new(1282727, "Danilo", 
         "danilo.s@email.com", true,false,1212, DateTime.Now, 1341567);
 
-        professor.Usuario = new ("Danilo Aparecido", "30292919821", new DateTime(1983,01,01), true,
-        "danilo.aparecido@email.com",null, false, DateTime.Now);
+        // professor.Usuario = new ("Danilo Aparecido", "30292919821", new DateTime(1983,01,01), true,
+        // "danilo.aparecido@email.com",null, false, DateTime.Now);
 
         professores.Add(professor);
 
@@ -65,7 +65,7 @@ public class FakeDbContexto : IDisposable, IUnitOfWork
         var disciplinas = new List<Disciplina>();
 
         var disciplina = new Disciplina(1341567,"Matemática", "Matemática base ensino médio"
-        , new DateTime(2021,10,12),new DateTime(2022,02,12), TipoDisciplina.Teorica, 
+        , new DateTime(2021,10,12),new DateTime(2022,10,12), TipoDisciplina.Teorica, 
         new DateTime(2021, 09,12), 1282727);
 
         var conteudo = new Conteudo("Equações segundo grau", "Aprendizado de equações de segundo grau",
