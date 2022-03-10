@@ -8,6 +8,6 @@ public class ConteudoMapping : IEntityTypeConfiguration<Conteudo>
 {
     public void Configure(EntityTypeBuilder<Conteudo> builder)
     {
-        throw new NotImplementedException();
+        
     }
 }

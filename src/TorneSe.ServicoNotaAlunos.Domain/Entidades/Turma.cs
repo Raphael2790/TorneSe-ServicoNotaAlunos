@@ -27,4 +27,5 @@ public class Turma : Entidade
 
     public Disciplina Disciplina { get; private set; }
     public ICollection<AlunosTurmas> AlunosTurmas { get; private set; }
+    public ICollection<Aluno> Alunos { get; private set; }
 }

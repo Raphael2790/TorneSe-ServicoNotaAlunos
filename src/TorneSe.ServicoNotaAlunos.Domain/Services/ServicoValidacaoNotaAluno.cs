@@ -83,7 +83,7 @@ public class ServicoValidacaoNotaAluno : IServicoValidacaoNotaAluno
 
     private bool AlunoEstaMatriculado(Aluno aluno, int disciplinaId) =>
         aluno.AlunosTurmas
-            .SelectMany(alunoTurma => alunoTurma.Turmas)
+            .Select(alunoTurma => alunoTurma.Turma)
             .Any(turma => turma.DisciplinaId == disciplinaId);
 
     public void ValidarLancamento(Aluno aluno, Professor professor, Disciplina disciplina)

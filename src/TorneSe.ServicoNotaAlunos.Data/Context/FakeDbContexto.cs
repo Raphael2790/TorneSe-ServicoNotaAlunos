@@ -30,11 +30,9 @@ public class FakeDbContexto : IDisposable, IUnitOfWork
         { 
             new(1234,10019,DateTime.Now) 
             {
-                Turmas = new List<Turma>
-                {
+                Turma =
                     new("Grupo Matemática I", Periodo.Noturno, new DateTime(2021,06,01),
                     new DateTime(2021,12,01), DateTime.Now, 1341567)
-                }
             } 
         };
 

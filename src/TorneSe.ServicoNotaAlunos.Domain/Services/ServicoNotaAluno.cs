@@ -35,6 +35,8 @@ public class ServicoNotaAluno : IServicoNotaAluno
     {
         Console.WriteLine("Processando lógica de negocio...");
 
+        var conectado = await _disciplinaRepository.ConectadoAoBanco();
+
         if(!registrarNotaAluno.MensagemEstaValida())
         {
             AdicionarMensagensErroNoContexto(registrarNotaAluno);

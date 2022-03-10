@@ -23,6 +23,7 @@ public class Nota : Entidade
 
     public Aluno Aluno { get; set; }
     public Atividade Atividade { get; set; }
+    public Usuario Usuario { get; set; }
 
     public void CancelarNotaPorRetentativa() =>
         CanceladaPorRetentativa = true;

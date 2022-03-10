@@ -8,6 +8,6 @@ public class AlunoMapping : IEntityTypeConfiguration<Aluno>
 {
     public void Configure(EntityTypeBuilder<Aluno> builder)
     {
-        throw new NotImplementedException();
+        
     }
 }

@@ -19,7 +19,8 @@ public class Aluno: Usuario
     public DateTime DataCadastro { get; private set; }
 
     public ICollection<Nota> Notas { get; private set; }
-    public ICollection<AlunosTurmas> AlunosTurmas { get; set; }
+    public ICollection<AlunosTurmas> AlunosTurmas { get;  set; }
+    public ICollection<Turma> Turmas{ get; private set; }
 
     public void AdicionarNota(Nota nota) 
     {

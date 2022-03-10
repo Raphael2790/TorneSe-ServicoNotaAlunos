@@ -35,6 +35,6 @@ public class AlunoValidacaoHandler : AbstractHandler<ServicoNotaValidacaoRequest
 
     private bool AlunoEstaMatriculado(Aluno aluno, int disciplinaId) =>
         aluno.AlunosTurmas
-            .SelectMany(alunoTurma => alunoTurma.Turmas)
+            .Select(alunoTurma => alunoTurma.Turma)
             .Any(turma => turma.DisciplinaId == disciplinaId);
 }

@@ -24,3 +24,6 @@ A partir de uma solução criada digitamos o comando para adicionar a referencia
 
  ## Site para encontrar formatos de connections strings
  - https://www.connectionstrings.com/
+
+ ## Postgres DataTypes
+- https://www.postgresql.org/docs/8.3/datatype.html
