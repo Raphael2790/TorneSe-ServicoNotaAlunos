@@ -27,7 +27,8 @@ public class DisciplinaRepository : IDisciplinaRepository
         await Task.FromResult(_contexto.Disciplinas.FirstOrDefault(x => x.Conteudos.SelectMany(y => y.Atividades).Any(y => y.Id == atividadeId)));
 
     public async Task<Disciplina> BuscarDisciplinaPorAtividadeIdDb(int atividadeId) =>
-        await _servicoNotaAlunoContexto.Disciplinas.FirstOrDefaultAsync(x => x.Conteudos.SelectMany(y => y.Atividades).Any(y => y.Id == atividadeId));
+        await _servicoNotaAlunoContexto.Disciplinas
+                .FirstOrDefaultAsync(x => x.Conteudos.SelectMany(y => y.Atividades).Any(y => y.Id == atividadeId));
 
     public void Dispose()
     {

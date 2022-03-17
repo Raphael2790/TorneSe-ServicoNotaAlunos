@@ -8,4 +8,6 @@ public interface IUsuarioRepository : IRepository<Usuario>
 {
     Task<Aluno> BuscarAluno(int alunoId);
     Task<Professor> BuscarProfessor(int professorId);
+    Task<Aluno> BuscarAlunoDb(int alunoId);
+    Task<Professor> BuscarProfessorDb(int professorId);
 }

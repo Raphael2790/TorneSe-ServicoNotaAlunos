@@ -19,6 +19,8 @@ public class Conteudo : Entidade
     public DateTime DataInicio { get; private set; }
     public DateTime DataTermino { get; private set; }
     public DateTime DataCadastro { get; private set; }
+    public int DisciplinaId { get; private set; }
+
     public Disciplina Disciplina { get; private set; }
     public ICollection<Atividade> Atividades { get; private set; }
 

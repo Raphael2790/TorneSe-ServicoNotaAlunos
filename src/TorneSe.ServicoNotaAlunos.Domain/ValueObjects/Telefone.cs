@@ -2,6 +2,18 @@ namespace TorneSe.ServicoNotaAlunos.Domain.ValueObjects;
 
 public class Telefone
 {
+    public Telefone(string texto)
+    {
+        if(texto.Split(" ").Count() == 3)
+        {
+            CodigoPais = texto.Split(" ")[0];
+            Area = texto.Split(" ")[1];
+            Numero = texto.Split(" ")[2];
+        }
+    }
+
+    public Telefone() { }
+    
     public string Numero { get; set; }
     public string Area { get; set; }
     public string CodigoPais { get; set; }

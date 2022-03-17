@@ -64,7 +64,7 @@ public class FakeDbContexto : IDisposable, IUnitOfWork
 
         var disciplina = new Disciplina(1341567,"Matemática", "Matemática base ensino médio"
         , new DateTime(2021,10,12),new DateTime(2022,10,12), TipoDisciplina.Teorica, 
-        new DateTime(2021, 09,12), 1282727);
+        new DateTime(2021, 09,12));
 
         var conteudo = new Conteudo("Equações segundo grau", "Aprendizado de equações de segundo grau",
         new DateTime(2021,10,18), new DateTime(2021,11,18), new DateTime(2021,10,15));
