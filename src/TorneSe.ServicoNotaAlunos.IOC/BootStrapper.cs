@@ -3,6 +3,7 @@ using TorneSe.ServicoNotaAlunos.Application.Interfaces;
 using TorneSe.ServicoNotaAlunos.Application.Services;
 using TorneSe.ServicoNotaAlunos.Data.Context;
 using TorneSe.ServicoNotaAlunos.Data.Repositories;
+using TorneSe.ServicoNotaAlunos.Data.UnitOfWork;
 using TorneSe.ServicoNotaAlunos.Domain.DomainObjects;
 using TorneSe.ServicoNotaAlunos.Domain.Interfaces.Repositories;
 using TorneSe.ServicoNotaAlunos.Domain.Interfaces.Services;
@@ -19,45 +20,53 @@ public static class BootStrapper
 {
     public static IServiceCollection ConfigurarInjecaoDependencia(this IServiceCollection services)
     {
-        RegistrarServicos(services);
-        RegistrarContextos(services);
-        RegistrarRepositorios(services);
-        RegistrarFilas(services);
-        RegistrarContextoNotificacao(services);
-        RegistrarEncadeamentos(services);
+        services
+            .RegistrarServicos()
+            .RegistrarContextos()
+            .RegistrarRepositorios()
+            .RegistrarFilas()
+            .RegistrarContextoNotificacao()
+            .RegistrarEncadeamentos()
+            .RegistrarUnitOfWork();
+            
         return services;
     }
 
-    private static void RegistrarServicos(IServiceCollection services)
+    private static IServiceCollection RegistrarServicos(this IServiceCollection services)
     {
         services.AddScoped<IServicoAplicacaoNotaAluno,ServicoAplicacaoNotaAluno>();
         services.AddScoped<IServicoNotaAluno, ServicoNotaAluno>();
         services.AddScoped<IServicoValidacaoNotaAluno, ServicoValidacaoNotaAluno>();
+        return services;
     }
 
-    private static void RegistrarContextos(IServiceCollection services)
+    private static IServiceCollection RegistrarContextos(this IServiceCollection services)
     {
         services.AddScoped<FakeDbContexto>();
         services.AddScoped<ServicoNotaAlunosContexto>();
+        return services;
     }
 
-    private static void RegistrarRepositorios(IServiceCollection services)
+    private static IServiceCollection RegistrarRepositorios(this IServiceCollection services)
     {
         services.AddScoped<IDisciplinaRepository, DisciplinaRepository>();
         services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+        return services;
     }
 
-    private static void RegistrarFilas(IServiceCollection services)
+    private static IServiceCollection RegistrarFilas(this IServiceCollection services)
     {
         services.AddScoped<ILancarNotaAlunoFakeClient, LancarNotaAlunoFakeClient>();
+        return services;
     }
 
-    private static void RegistrarContextoNotificacao(IServiceCollection services)
+    private static IServiceCollection RegistrarContextoNotificacao(this IServiceCollection services)
     {
         services.AddScoped<ContextoNotificacao>();
+        return services;
     }
 
-    private static void RegistrarEncadeamentos(IServiceCollection services)
+    private static IServiceCollection RegistrarEncadeamentos(this IServiceCollection services)
     {
         services
             .AdicionarEncadeamento<IHandler<ServicoNotaValidacaoRequest>, ServicoNotaValidacaoRequest>
@@ -66,5 +75,12 @@ public static class BootStrapper
         services
           .AdicionarEncadeamentoAssincrono<IAsyncHandler<ServicoNotaValidacaoRequest>, ServicoNotaValidacaoRequest>
         (typeof(AlunoRequestBuildHandler), typeof(ProfessorRequestBuildHandler), typeof(DisciplinaRequestBuildHandler));
+        return services;
+    }
+
+    private static IServiceCollection RegistrarUnitOfWork(this IServiceCollection services)
+    {
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        return services;
     }
 }

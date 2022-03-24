@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using TorneSe.ServicoNotaAlunos.Data.Conversores;
 using TorneSe.ServicoNotaAlunos.Domain.Entidades;
 using TorneSe.ServicoNotaAlunos.Domain.ValueObjects;
 
@@ -56,7 +57,7 @@ public class UsuarioMapping : IEntityTypeConfiguration<Usuario>
 
         builder.Property(x => x.TelefoneContato)
                 .HasColumnName("telefone_contato")
-                .HasConversion(x => x.ToString(), x => new Telefone(x))
+                .HasConversion(TelefoneConversor.Instance)
                 .HasColumnType("VARCHAR(30)")
                 .IsRequired();
     }

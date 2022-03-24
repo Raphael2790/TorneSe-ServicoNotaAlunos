@@ -18,8 +18,6 @@ public class DisciplinaRepository : IDisciplinaRepository
         _servicoNotaAlunoContexto = servicoNotaAlunoContexto;
     }
 
-    public IUnitOfWork UnitOfWork => _servicoNotaAlunoContexto;
-
     public async Task<bool> ConectadoAoBanco() =>
         await _servicoNotaAlunoContexto.Database.CanConnectAsync();
     
@@ -28,6 +26,7 @@ public class DisciplinaRepository : IDisciplinaRepository
 
     public async Task<Disciplina> BuscarDisciplinaPorAtividadeIdDb(int atividadeId) =>
         await _servicoNotaAlunoContexto.Disciplinas
+                .AsNoTrackingWithIdentityResolution()
                 .FirstOrDefaultAsync(x => x.Conteudos.SelectMany(y => y.Atividades).Any(y => y.Id == atividadeId));
 
     public void Dispose()

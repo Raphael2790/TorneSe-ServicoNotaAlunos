@@ -27,4 +27,7 @@ public class Professor : Usuario
     public int DisciplinaId { get; private set; }
 
     public Disciplina Disciplina { get; private set; }
+
+    public void AlterarNome(string novoNome) =>
+        NomeAbreviado = novoNome;
 }

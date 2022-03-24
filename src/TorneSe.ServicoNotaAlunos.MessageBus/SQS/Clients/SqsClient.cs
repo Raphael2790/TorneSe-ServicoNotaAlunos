@@ -6,7 +6,7 @@ namespace TorneSe.ServicoNotaAlunos.MessageBus.SQS.Clients
     {
         public virtual Task DeleteMessageAsync(string messageHandle)
         {
-            throw new NotImplementedException();
+            return Task.CompletedTask;
         }
 
         public virtual Task<QueueMessage<T>> GetMessageAsync()

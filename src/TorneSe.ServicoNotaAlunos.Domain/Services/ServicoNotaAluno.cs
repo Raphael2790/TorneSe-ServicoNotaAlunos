@@ -60,8 +60,6 @@ public class ServicoNotaAluno : IServicoNotaAluno
                         DateTime.Now, 101020);
 
         request.Aluno.AdicionarNota(nota);
-
-        await _usuarioRepository.UnitOfWork.Commit();
     }
 
     private void RemoverNotaAluno(Aluno aluno, int atividadeId)
@@ -91,6 +89,8 @@ public class ServicoNotaAluno : IServicoNotaAluno
         // await initialHandler.Handle(request);
 
         await _requestBuildHandler.Handle(request);
+
+        request.Professor.AlterarNome("Danilo");
 
         return request;
     }

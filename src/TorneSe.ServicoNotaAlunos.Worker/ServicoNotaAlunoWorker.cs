@@ -42,6 +42,13 @@ public class ServicoNotaAlunoWorker : BackgroundService
             }
 
             await servicoNotaAlunoApp.ProcessarLancamentoNota(mensagem.MessageBody);
+
+            if(contextoNotificacao.TemNotificacoes)
+                _logger.LogWarning(contextoNotificacao.ToJson());
+            else
+                _logger.LogInformation($"Mensagem de identificador:{mensagem.MessageId}, processada com sucesso");
+
+            await clienteMensagens.DeleteMessageAsync(mensagem.MessageHandle);
         }
     } 
 }

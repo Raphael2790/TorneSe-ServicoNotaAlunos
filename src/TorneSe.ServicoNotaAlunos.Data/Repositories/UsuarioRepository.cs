@@ -18,8 +18,6 @@ public class UsuarioRepository : IUsuarioRepository
         _servicoNotaAlunoContexto = servicoNotaAlunoContexto;
     }
 
-    public IUnitOfWork UnitOfWork => _servicoNotaAlunoContexto;
-
     public async Task<Aluno> BuscarAluno(int alunoId) =>
         await Task.FromResult(_contexto.Alunos.FirstOrDefault(x => x.Id == alunoId));
 
@@ -30,7 +28,9 @@ public class UsuarioRepository : IUsuarioRepository
         await Task.FromResult(_contexto.Professores.FirstOrDefault(x => x.Id == professorId));
 
     public async Task<Professor> BuscarProfessorDb(int professorId) => 
-        await _servicoNotaAlunoContexto.Professores.FirstOrDefaultAsync(x => x.Id == professorId);
+        await _servicoNotaAlunoContexto.Professores
+                .AsNoTrackingWithIdentityResolution()
+                .FirstOrDefaultAsync(x => x.Id == professorId);
 
     public void Dispose()
     {
