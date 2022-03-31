@@ -2,6 +2,7 @@ using TorneSe.ServicoNotaAlunos.Application.Interfaces;
 using TorneSe.ServicoNotaAlunos.Domain.Notification;
 using TorneSe.ServicoNotaAlunos.Domain.Utils;
 using TorneSe.ServicoNotaAlunos.MessageBus.SQS.Clients;
+using TorneSe.ServicoNotaAlunos.MessageBus.SQS.Clients.Interfaces;
 
 namespace TorneSe.ServicoNotaAlunos.Worker;
 
@@ -24,7 +25,7 @@ public class ServicoNotaAlunoWorker : BackgroundService
             _logger.LogInformation(Constantes.MensagensAplicacao.INICIANDO_SERVICO);
             using var scope = _serviceScopeFactory.CreateScope();
             var servicoNotaAlunoApp = scope.ServiceProvider.GetRequiredService<IServicoAplicacaoNotaAluno>();
-            var clienteMensagens = scope.ServiceProvider.GetRequiredService<ILancarNotaAlunoFakeClient>();
+            var clienteMensagens = scope.ServiceProvider.GetRequiredService<ILancarNotaAlunoRecebimentoClient>();
             var contextoNotificacao = scope.ServiceProvider.GetRequiredService<ContextoNotificacao>();
 
             var mensagem = await clienteMensagens.GetMessageAsync();

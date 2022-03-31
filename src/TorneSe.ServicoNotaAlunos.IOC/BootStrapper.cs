@@ -13,6 +13,9 @@ using TorneSe.ServicoNotaAlunos.Domain.Validations.Handlers;
 using TorneSe.ServicoNotaAlunos.Domain.Validations.Handlers.Interfaces;
 using TorneSe.ServicoNotaAlunos.IOC.Extensions;
 using TorneSe.ServicoNotaAlunos.MessageBus.SQS.Clients;
+using TorneSe.ServicoNotaAlunos.MessageBus.SQS.Clients.Interfaces;
+using TorneSe.ServicoNotaAlunos.MessageBus.SQS.Context;
+using TorneSe.ServicoNotaAlunos.MessageBus.SQS.Context.Interfaces;
 
 namespace TorneSe.ServicoNotaAlunos.IOC;
 
@@ -27,7 +30,8 @@ public static class BootStrapper
             .RegistrarFilas()
             .RegistrarContextoNotificacao()
             .RegistrarEncadeamentos()
-            .RegistrarUnitOfWork();
+            .RegistrarUnitOfWork()
+            .RegistrarContextoSqs();
             
         return services;
     }
@@ -57,6 +61,7 @@ public static class BootStrapper
     private static IServiceCollection RegistrarFilas(this IServiceCollection services)
     {
         services.AddScoped<ILancarNotaAlunoFakeClient, LancarNotaAlunoFakeClient>();
+        services.AddScoped<ILancarNotaAlunoRecebimentoClient, LancarNotaAlunoRecebimentoClient>();
         return services;
     }
 
@@ -82,5 +87,10 @@ public static class BootStrapper
     {
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         return services;
+    }
+
+    private static IServiceCollection RegistrarContextoSqs(this IServiceCollection services)
+    {
+        return services.AddScoped<ISqsContext, SqsContext>();
     }
 }
