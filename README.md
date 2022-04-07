@@ -27,3 +27,6 @@ A partir de uma solução criada digitamos o comando para adicionar a referencia
 
  ## Postgres DataTypes
 - https://www.postgresql.org/docs/8.3/datatype.html
+
+## GUId Generator
+- https://www.guidgenerator.com/online-guid-generator.aspx
