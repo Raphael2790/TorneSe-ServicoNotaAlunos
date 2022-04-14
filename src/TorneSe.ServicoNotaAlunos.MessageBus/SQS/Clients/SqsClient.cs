@@ -21,9 +21,23 @@ namespace TorneSe.ServicoNotaAlunos.MessageBus.SQS.Clients
             _nomeFila = context.BuscarUrlFila(nomeFila);
         }
 
-        public virtual Task DeleteMessageAsync(string messageHandle)
+        public virtual async Task DeleteMessageAsync(string messageHandle)
         {
-            return Task.CompletedTask;
+            try
+            {
+                var deletarMensagem = new DeleteMessageRequest
+                {
+                    QueueUrl = _nomeFila,
+                    ReceiptHandle = messageHandle
+                };
+
+                await _context.Sqs.DeleteMessageAsync(deletarMensagem);
+            }
+            catch(Exception ex)
+            {
+                _contextoNotificacao.Add(ex.Message);
+                _contextoNotificacao.Add(ex.InnerException?.Message);
+            }
         }
 
         public virtual async Task<QueueMessage<T>> GetMessageAsync()
@@ -90,14 +104,53 @@ namespace TorneSe.ServicoNotaAlunos.MessageBus.SQS.Clients
             return list;
         }
 
-        public virtual Task SendMessageAsync(T message)
+        public virtual async Task SendMessageAsync(T message)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var mensagem = new SendMessageRequest
+                {
+                    QueueUrl = _nomeFila,
+                    MessageBody = JsonSerializer.Serialize(message)
+                };
+
+                await _context.Sqs.SendMessageAsync(mensagem);
+            }
+            catch(Exception ex)
+            {
+                _contextoNotificacao.Add(ex.Message);
+                _contextoNotificacao.Add(ex.InnerException?.Message);
+            }
         }
 
-        public virtual Task SendMessageAsync(List<T> messageList)
+        public virtual async Task SendMessageAsync(List<T> messageList)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var messageBatchList = new List<SendMessageBatchRequestEntry>();
+
+                foreach (var message in messageList)
+                {
+                    messageBatchList.Add(new SendMessageBatchRequestEntry()
+                    {
+                        Id = message.GetHashCode().ToString(),
+                        MessageBody = JsonSerializer.Serialize(message)
+                    });
+                }
+
+                var sendMessageBatchRequest = new SendMessageBatchRequest
+                {
+                    QueueUrl = _nomeFila,
+                    Entries = messageBatchList
+                };
+
+                await _context.Sqs.SendMessageBatchAsync(sendMessageBatchRequest);
+            }
+            catch(Exception ex)
+            {
+                _contextoNotificacao.Add(ex.Message);
+                _contextoNotificacao.Add(ex.InnerException?.Message);
+            }
         }
     }
 }

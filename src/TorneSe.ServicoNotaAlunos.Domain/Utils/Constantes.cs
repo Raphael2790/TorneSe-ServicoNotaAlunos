@@ -6,6 +6,7 @@ public static class Constantes
     {
         public const string SEM_MENSAGEM_NA_FILA = "Não possuem mensagens a ser processadas na fila...";
         public const string INICIANDO_SERVICO = "Iniciando o serviço de notas";
+        public const string NAO_HOUVE_MUDANCAS_NO_PROCESSAMENTO = "Não foi modificado nada nesse envio";
     }
 
     public static class MensagensExcecao

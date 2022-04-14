@@ -42,6 +42,7 @@ public static class BootStrapper
         services.AddScoped<IServicoNotaAluno, ServicoNotaAluno>();
         services.AddScoped<IServicoValidacaoNotaAluno, ServicoValidacaoNotaAluno>();
         services.AddScoped<INotaAlunoReceberMensagemService, NotaAlunoReceberMensagemService>();
+        services.AddScoped<INotaAlunoRespostaMensagemService, NotaAlunoRespostaMensagemService>();
         return services;
     }
 
@@ -63,6 +64,7 @@ public static class BootStrapper
     {
         services.AddScoped<ILancarNotaAlunoFakeClient, LancarNotaAlunoFakeClient>();
         services.AddScoped<ILancarNotaAlunoRecebimentoClient, LancarNotaAlunoRecebimentoClient>();
+        services.AddScoped<ILancarNotaAlunoRespostaClient, LancarNotaAlunoRespostaClient>();
         return services;
     }
 
