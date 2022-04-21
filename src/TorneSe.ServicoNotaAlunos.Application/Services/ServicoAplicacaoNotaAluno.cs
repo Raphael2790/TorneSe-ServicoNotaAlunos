@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using TorneSe.ServicoNotaAlunos.Application.Interfaces;
 using TorneSe.ServicoNotaAlunos.Domain.DomainObjects;
 using TorneSe.ServicoNotaAlunos.Domain.Excecoes;
@@ -13,19 +14,22 @@ public class ServicoAplicacaoNotaAluno : IServicoAplicacaoNotaAluno
     private readonly IUnitOfWork _uow;
     private readonly INotaAlunoReceberMensagemService _notaAlunoReceberMensagem;
     private readonly INotaAlunoRespostaMensagemService _notaAlunoRespostaMensagem;
+    private readonly ILogger<ServicoAplicacaoNotaAluno> _logger;
     private readonly ContextoNotificacao _contextoNotificacao;
 
     public ServicoAplicacaoNotaAluno(IServicoNotaAluno servicoNotaAluno,
                                     IUnitOfWork uow,
                                     INotaAlunoReceberMensagemService notaAlunoReceberMensagem,
                                     ContextoNotificacao contextoNotificacao,
-                                    INotaAlunoRespostaMensagemService notaAlunoRespostaMensagem)
+                                    INotaAlunoRespostaMensagemService notaAlunoRespostaMensagem,
+                                    ILogger<ServicoAplicacaoNotaAluno> logger)
     {
         _servicoNotaAluno = servicoNotaAluno;
         _uow = uow;
         _notaAlunoReceberMensagem = notaAlunoReceberMensagem;
         _contextoNotificacao = contextoNotificacao;
         _notaAlunoRespostaMensagem = notaAlunoRespostaMensagem;
+        _logger = logger;
     }
 
     public async Task ProcessarLancamentoNota()
@@ -33,20 +37,22 @@ public class ServicoAplicacaoNotaAluno : IServicoAplicacaoNotaAluno
         try
         {
             var mensagem = await _notaAlunoReceberMensagem.BuscarMensagem();
+            _logger.LogInformation("Orquestrando o fluxo da aplicação");
 
             if(_contextoNotificacao.TemNotificacoes)
             {
-                System.Console.WriteLine(_contextoNotificacao.ToJson());
+                _logger.LogWarning(_contextoNotificacao.ToJson());
                 return;
             }
 
             if(mensagem is null)
             {
-                System.Console.WriteLine(Constantes.MensagensAplicacao.SEM_MENSAGEM_NA_FILA);
+                _logger.LogInformation(Constantes.MensagensAplicacao.SEM_MENSAGEM_NA_FILA);
                 return;
             }
 
-            Console.WriteLine("Orquestrando o fluxo da aplicação");
+            _logger.LogInformation("Iniciando processamento da mensagem: " + mensagem.MessageId + " " + DateTime.Now.ToString());
+
             await _servicoNotaAluno.LancarNota(mensagem.MessageBody);
 
             if(!await _uow.Commit())
@@ -56,17 +62,17 @@ public class ServicoAplicacaoNotaAluno : IServicoAplicacaoNotaAluno
             await _notaAlunoRespostaMensagem.EnviarMensagem(mensagem.MessageBody);
 
             if(_contextoNotificacao.TemNotificacoes)
-                System.Console.WriteLine(_contextoNotificacao.ToJson());
+                _logger.LogWarning(_contextoNotificacao.ToJson());
             else
-                System.Console.WriteLine($"Mensagem de identificador:{mensagem.MessageId}, processada com sucesso");
+               _logger.LogInformation($"Mensagem de identificador:{mensagem.MessageId}, processada com sucesso" + DateTime.Now.ToString());
         }
         catch(DomainException ex)
         {
-            System.Console.WriteLine(ex.Message);
+            _logger.LogError(ex.Message);
         }
         catch(Exception ex)
         {
-            System.Console.WriteLine(ex.Message);
+            _logger.LogCritical(ex.Message);
         }
     }
 }

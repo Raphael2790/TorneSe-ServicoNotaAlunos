@@ -1,4 +1,6 @@
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using TorneSe.ServicoNotaAlunos.Application.Interfaces;
 using TorneSe.ServicoNotaAlunos.Application.Services;
 using TorneSe.ServicoNotaAlunos.Data.Context;
@@ -21,7 +23,9 @@ namespace TorneSe.ServicoNotaAlunos.IOC;
 
 public static class BootStrapper
 {
-    public static IServiceCollection ConfigurarInjecaoDependencia(this IServiceCollection services)
+    public static IServiceCollection ConfigurarInjecaoDependencia(this IServiceCollection services,
+                                                                    IConfiguration configuration,
+                                                                    IHostEnvironment hostEnvironment)
     {
         services
             .RegistrarServicos()
@@ -31,7 +35,8 @@ public static class BootStrapper
             .RegistrarContextoNotificacao()
             .RegistrarEncadeamentos()
             .RegistrarUnitOfWork()
-            .RegistrarContextoSqs();
+            .RegistrarContextoSqs()
+            .ConfigurarSerilog(configuration, hostEnvironment);
             
         return services;
     }
