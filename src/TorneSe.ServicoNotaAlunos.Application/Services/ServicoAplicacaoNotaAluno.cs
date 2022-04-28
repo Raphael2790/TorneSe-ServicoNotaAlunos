@@ -51,7 +51,8 @@ public class ServicoAplicacaoNotaAluno : IServicoAplicacaoNotaAluno
                 return;
             }
 
-            _logger.LogInformation("Iniciando processamento da mensagem: " + mensagem.MessageId + " " + DateTime.Now.ToString());
+            _logger.LogInformation("Recebendo mensagem para processar: {@Mensagem}", mensagem.MessageBody);
+            _logger.LogInformation("Iniciando processamento da mensagem: {Identificador} {Data}",mensagem.MessageId,DateTime.Now.ToString());
 
             await _servicoNotaAluno.LancarNota(mensagem.MessageBody);
 
