@@ -30,15 +30,17 @@ public static class SerilogExtensions
             //         .PostgreSQL(configuration.GetConnectionString("DefaultConnection"), 
             //         configuration["PostgresLogs:TableName"], GetColumnsOptions(), restrictedToMinimumLevel:
             //         Serilog.Events.LogEventLevel.Information, needAutoCreateTable : true, schemaName : "servnota")
-            //.WriteTo.MongoDB("mongodb://localhost:27018/servico-notas-torne-se")
-            .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri("http://localhost:9200"))
-            {
-                MinimumLogEventLevel = LogEventLevel.Information,
-                IndexFormat = indexFormat,
-                AutoRegisterTemplate = true,
-                NumberOfShards = 2,
-                NumberOfReplicas = 1
-            })
+            .WriteTo.MongoDB(configuration.GetConnectionString("MongoDbLogs"), collectionName : "logs-notas")
+            .WriteTo.Elasticsearch(
+                new 
+                ElasticsearchSinkOptions(new Uri(configuration.GetConnectionString("ElasticSearchLogs")))
+                {
+                    MinimumLogEventLevel = LogEventLevel.Information,
+                    IndexFormat = indexFormat,
+                    AutoRegisterTemplate = true,
+                    NumberOfShards = 2,
+                    NumberOfReplicas = 1
+                })
             .ReadFrom.Configuration(configuration)
             .CreateLogger();
             

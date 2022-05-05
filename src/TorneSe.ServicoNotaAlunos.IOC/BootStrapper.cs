@@ -14,6 +14,7 @@ using TorneSe.ServicoNotaAlunos.Domain.Services;
 using TorneSe.ServicoNotaAlunos.Domain.Validations.Handlers;
 using TorneSe.ServicoNotaAlunos.Domain.Validations.Handlers.Interfaces;
 using TorneSe.ServicoNotaAlunos.IOC.Extensions;
+using TorneSe.ServicoNotaAlunos.IOC.Providers;
 using TorneSe.ServicoNotaAlunos.MessageBus.SQS.Clients;
 using TorneSe.ServicoNotaAlunos.MessageBus.SQS.Clients.Interfaces;
 using TorneSe.ServicoNotaAlunos.MessageBus.SQS.Context;
@@ -36,7 +37,9 @@ public static class BootStrapper
             .RegistrarEncadeamentos()
             .RegistrarUnitOfWork()
             .RegistrarContextoSqs()
-            .ConfigurarSerilog(configuration, hostEnvironment);
+            .RegistrarHealthChecks()
+            .ConfigurarSerilog(configuration, hostEnvironment)
+            .ConfigurarHealthChecks(configuration);
             
         return services;
     }
@@ -100,5 +103,10 @@ public static class BootStrapper
     private static IServiceCollection RegistrarContextoSqs(this IServiceCollection services)
     {
         return services.AddScoped<ISqsContext, SqsContext>();
+    }
+
+    private static IServiceCollection RegistrarHealthChecks(this IServiceCollection services)
+    {
+        return services.AddScoped<AwsSqsHealthCheck>();
     }
 }
