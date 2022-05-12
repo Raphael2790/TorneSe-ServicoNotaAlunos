@@ -48,3 +48,6 @@ A partir de uma solução criada digitamos o comando para adicionar a referencia
 
 ## Documentação Serilog Postgres
  - https://github.com/serilog-contrib/Serilog.Sinks.Postgresql.Alternative/blob/master/HowToUse.md
+
+## Comparativo Atributos, Asserts de frameworks de testes
+ - https://xunit.net/docs/comparisons
