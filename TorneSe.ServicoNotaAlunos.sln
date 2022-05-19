@@ -1,27 +1,74 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30114.105
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32319.34
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0E9859FA-9D65-4E29-A9A6-5B21CE0CF478}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TorneSe.ServicoNotaAlunos.Worker", "src\TorneSe.ServicoNotaAlunos.Worker\TorneSe.ServicoNotaAlunos.Worker.csproj", "{41692720-04A2-4E12-83E6-3C3255314A9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TorneSe.ServicoNotaAlunos.Worker", "src\TorneSe.ServicoNotaAlunos.Worker\TorneSe.ServicoNotaAlunos.Worker.csproj", "{41692720-04A2-4E12-83E6-3C3255314A9A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0D14471B-375B-4D7D-B5E3-E503550E7482}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TorneSe.ServicoNotaAlunos.UnitTests", "tests\TorneSe.ServicoNotaAlunos.UnitTests\TorneSe.ServicoNotaAlunos.UnitTests.csproj", "{A62FEC3A-8C67-41BD-9CA8-8B3D7411248F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TorneSe.ServicoNotaAlunos.Domain", "src\TorneSe.ServicoNotaAlunos.Domain\TorneSe.ServicoNotaAlunos.Domain.csproj", "{94A2DC25-E749-4601-B0D3-00BC6C25E36D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TorneSe.ServicoNotaAlunos.Application", "src\TorneSe.ServicoNotaAlunos.Application\TorneSe.ServicoNotaAlunos.Application.csproj", "{020FA3B5-4C25-41AF-8BD8-F70B83FEBF80}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TorneSe.ServicoNotaAlunos.Data", "src\TorneSe.ServicoNotaAlunos.Data\TorneSe.ServicoNotaAlunos.Data.csproj", "{1352DF61-D6E4-4927-8027-4AE8BDB2D617}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TorneSe.ServicoNotaAlunos.IOC", "src\TorneSe.ServicoNotaAlunos.IOC\TorneSe.ServicoNotaAlunos.IOC.csproj", "{F9FEC409-BC65-4BED-8E95-CB0E7EF42AC5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TorneSe.ServicoNotaAlunos.MessageBus", "src\TorneSe.ServicoNotaAlunos.MessageBus\TorneSe.ServicoNotaAlunos.MessageBus.csproj", "{A6BA9072-5A80-4463-9341-DBA42B14CAD9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{41692720-04A2-4E12-83E6-3C3255314A9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{41692720-04A2-4E12-83E6-3C3255314A9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41692720-04A2-4E12-83E6-3C3255314A9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{41692720-04A2-4E12-83E6-3C3255314A9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A62FEC3A-8C67-41BD-9CA8-8B3D7411248F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A62FEC3A-8C67-41BD-9CA8-8B3D7411248F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A62FEC3A-8C67-41BD-9CA8-8B3D7411248F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A62FEC3A-8C67-41BD-9CA8-8B3D7411248F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94A2DC25-E749-4601-B0D3-00BC6C25E36D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94A2DC25-E749-4601-B0D3-00BC6C25E36D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94A2DC25-E749-4601-B0D3-00BC6C25E36D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94A2DC25-E749-4601-B0D3-00BC6C25E36D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{020FA3B5-4C25-41AF-8BD8-F70B83FEBF80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{020FA3B5-4C25-41AF-8BD8-F70B83FEBF80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{020FA3B5-4C25-41AF-8BD8-F70B83FEBF80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{020FA3B5-4C25-41AF-8BD8-F70B83FEBF80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1352DF61-D6E4-4927-8027-4AE8BDB2D617}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1352DF61-D6E4-4927-8027-4AE8BDB2D617}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1352DF61-D6E4-4927-8027-4AE8BDB2D617}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1352DF61-D6E4-4927-8027-4AE8BDB2D617}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9FEC409-BC65-4BED-8E95-CB0E7EF42AC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9FEC409-BC65-4BED-8E95-CB0E7EF42AC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9FEC409-BC65-4BED-8E95-CB0E7EF42AC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9FEC409-BC65-4BED-8E95-CB0E7EF42AC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6BA9072-5A80-4463-9341-DBA42B14CAD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6BA9072-5A80-4463-9341-DBA42B14CAD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6BA9072-5A80-4463-9341-DBA42B14CAD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6BA9072-5A80-4463-9341-DBA42B14CAD9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{41692720-04A2-4E12-83E6-3C3255314A9A} = {0E9859FA-9D65-4E29-A9A6-5B21CE0CF478}
+		{A62FEC3A-8C67-41BD-9CA8-8B3D7411248F} = {0D14471B-375B-4D7D-B5E3-E503550E7482}
+		{94A2DC25-E749-4601-B0D3-00BC6C25E36D} = {0E9859FA-9D65-4E29-A9A6-5B21CE0CF478}
+		{020FA3B5-4C25-41AF-8BD8-F70B83FEBF80} = {0E9859FA-9D65-4E29-A9A6-5B21CE0CF478}
+		{1352DF61-D6E4-4927-8027-4AE8BDB2D617} = {0E9859FA-9D65-4E29-A9A6-5B21CE0CF478}
+		{F9FEC409-BC65-4BED-8E95-CB0E7EF42AC5} = {0E9859FA-9D65-4E29-A9A6-5B21CE0CF478}
+		{A6BA9072-5A80-4463-9341-DBA42B14CAD9} = {0E9859FA-9D65-4E29-A9A6-5B21CE0CF478}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {400963F0-7DEF-43C9-8F4D-224CB9DC3266}
 	EndGlobalSection
 EndGlobal

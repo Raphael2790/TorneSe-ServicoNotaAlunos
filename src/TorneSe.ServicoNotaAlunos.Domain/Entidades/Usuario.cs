@@ -28,4 +28,14 @@ public class Usuario : Entidade, IRaizAgregacao
     public Telefone TelefoneContato { get; private set; }
     public bool Administrativo { get; private set; }
     public DateTime DataCadastro { get; private set; }
+
+    public void TornarAtivo()
+    {
+        Ativo = true;
+    }
+
+    public void TornarInativo()
+    {
+        Ativo = false;
+    }
 }

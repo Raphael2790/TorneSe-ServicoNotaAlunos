@@ -15,6 +15,7 @@ public class Professor : Usuario
         ProfessorSuplente = professorSuplente;
         DataCadastro = dataCadastro;
         DisciplinaId = disciplinaId;
+        TornarAtivo();
     }
 
     protected Professor() {}

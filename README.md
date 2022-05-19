@@ -51,3 +51,6 @@ A partir de uma solução criada digitamos o comando para adicionar a referencia
 
 ## Comparativo Atributos, Asserts de frameworks de testes
  - https://xunit.net/docs/comparisons
+
+## Instalação local Windows Service
+- https://docs.microsoft.com/pt-br/dotnet/core/extensions/windows-service

@@ -10,6 +10,7 @@ public class Aluno: Usuario
         DataCadastro = dataCadastro;
         Notas = new List<Nota>();
         AlunosTurmas = new List<AlunosTurmas>();
+        TornarAtivo();
     }
 
     protected Aluno() { }
@@ -26,5 +27,10 @@ public class Aluno: Usuario
     {
         //Validar a Nota
         Notas.Add(nota);
+    }
+
+    public void InativarAluno()
+    {
+
     }
 }
