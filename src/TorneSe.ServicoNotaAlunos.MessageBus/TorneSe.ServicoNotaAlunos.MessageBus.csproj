@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TorneSe.ServicoNotaAlunos.Domain\TorneSe.ServicoNotaAlunos.Domain.csproj" />
+    <ProjectReference Include="..\TorneSe.ServicoNotaAlunos.Data\TorneSe.ServicoNotaAlunos.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>

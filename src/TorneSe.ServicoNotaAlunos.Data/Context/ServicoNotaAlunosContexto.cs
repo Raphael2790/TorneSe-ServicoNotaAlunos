@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using TorneSe.ServicoNotaAlunos.Data.Environment;
 using TorneSe.ServicoNotaAlunos.Domain.Entidades;
 
 namespace TorneSe.ServicoNotaAlunos.Data.Context;
@@ -23,11 +24,11 @@ public class ServicoNotaAlunosContexto : DbContext
         if(!optionsBuilder.IsConfigured)
         {
             optionsBuilder
-            .UseNpgsql("User ID=torneSe;Password=1234;Host=localhost;Port=5432;Database=TorneSeDb;Pooling=true;Min Pool Size=0;Max Pool Size=100;Connection Lifetime=0;");
+            .UseNpgsql(ProvedorVariaveisAmbiente.Instancia.DefaultConnection);
         }
 
-        optionsBuilder.LogTo(Console.WriteLine);
-        optionsBuilder.EnableSensitiveDataLogging();
+        //optionsBuilder.LogTo(Console.WriteLine);
+        //optionsBuilder.EnableSensitiveDataLogging();
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

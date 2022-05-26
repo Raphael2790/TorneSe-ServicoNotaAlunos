@@ -54,3 +54,14 @@ A partir de uma solução criada digitamos o comando para adicionar a referencia
 
 ## Instalação local Windows Service
 - https://docs.microsoft.com/pt-br/dotnet/core/extensions/windows-service
+
+## Passo a passo instalação local
+- dotnet publish --no-self-contained -o C:\Users\raphael.silvestre\source\repos\publicacao -p:PublishProfile=FolderProfile
+- sc.exe create "Servico Integracao Notas" binpath="C:\Users\raphael.silvestre\source\repos\publicacao\TorneSe.ServicoNotaAluno.Worker.exe"
+- sc.exe failure "Servico Integracao Notas" reset=0 actions=restart/60000/restart/60000/run/1000
+- sc.exe stop "Servico Integracao Notas"
+- sc.exe delete "Servico Integracao Notas"
+
+## Criar imagem docker aplicação
+- docker build -t tornese/servico-notas:latest .
+- docker run -d --name servico-notas tornese/servico-notas
