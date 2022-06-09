@@ -39,7 +39,7 @@ public static class BootStrapper
             .RegistrarContextoSqs()
             .RegistrarHealthChecks()
             .ConfigurarSerilog(configuration, hostEnvironment)
-            .ConfigurarHealthChecks(configuration);
+            .ConfigurarHealthChecks(configuration, hostEnvironment);
             
         return services;
     }
