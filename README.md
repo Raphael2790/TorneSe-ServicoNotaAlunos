@@ -72,3 +72,14 @@ https://account.mongodb.com/account/login?n=%2Fv2%2F5e8c9673dce91c238d9046bc%23c
 
 ## Exemplo conexão cluster mongo
 mongodb://<user>:<password>@ac-2fgps34-shard-00-00.1tdhbqq.mongodb.net:27017,ac-2fgps34-shard-00-01.1tdhbqq.mongodb.net:27017,ac-2fgps34-shard-00-02.1tdhbqq.mongodb.net:27017/<database_name>?ssl=true&replicaSet=atlas-6bk87u-shard-0&authSource=admin&retryWrites=true&w=majority
+
+## Comandos após provisionar a maquina linux
+- sudo apt-get update
+- sudo apt-get upgrade -y
+- sudo apt-get install docker-compose -y
+- vim worker.env
+- docker build -t tornese/servico-notas:latest .
+
+## Executando background service .net linux 
+- https://developpaper.com/build-cross-platform-net-core-background-service/
+- https://rafaelcruz.azurewebsites.net/2020/07/07/construindo-um-windows-service-ou-linux-daemon-com-worker-service-net-core-parte-2/
