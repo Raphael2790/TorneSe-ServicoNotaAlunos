@@ -96,3 +96,10 @@ mongodb://<user>:<password>@ac-2fgps34-shard-00-00.1tdhbqq.mongodb.net:27017,ac-
   sudo apt-get install -y apt-transport-https && \
   sudo apt-get update && \
   sudo apt-get install -y aspnetcore-runtime-6.0
+
+## Subir cluster elastic
+- sudo apt-get update
+- sudo apt-get upgrade -y
+- sudo apt-get install docker-compose -y
+- docker-compose up -d
+- sudo chown -R 1000:1000 ./elasticsearch_data
